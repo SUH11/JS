@@ -35,3 +35,11 @@ function getCookie( key ) {
 function removeCookie( key ) {
     setCookie( key, '', -1 );
 }
+
+/*
+    sessionStorage／localStorage:
+        setItem(key, value);
+        getItem(key);
+        removeItem(key);
+        clear();
+*/
