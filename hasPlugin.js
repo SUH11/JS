@@ -12,3 +12,17 @@ function hasPlugin(name) {
 }
 // test
 console.log( hasPlugin('flash') );
+
+/*
+  ie下，使用COM的唯一标志符
+*/ 
+function hasIEPlugin(name) {
+  try {
+    new ActiveXObject(name);
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+// test COM的flash标志符
+console.log(hasIEPlugin( 'ShockwaveFlash.ShockwaveFlash' );
