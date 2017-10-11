@@ -9,7 +9,8 @@
       return typeof value === 'number' && global_isFinite(value);
     },
     configurable: true,
-    enumerable: false
+    enumerable: false,
+    writable: true
   });
   
 })(this);
