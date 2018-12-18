@@ -42,5 +42,18 @@ function mulBase(num, base) {
 	return converted;
 }
 
+// 判断回文
+function isPalindrome(word) {
+	var s = new Stack();
+	for (var i = 0; i < word.length; i ++) {
+		s.push(word[i]);
+	}
+	var rword = '';
+	while(s.length()) {
+		rword += s.pop();
+	}
+	return word === rword;
+}
+
 
 
