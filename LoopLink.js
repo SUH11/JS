@@ -31,7 +31,7 @@ function insert(newElement, item) {
 function display() {
 	var currentNode = this.head;
 	while(!(currentNode.next == null) && !(currentNode.next.element == 'head')) {
-		console.log(currentNode.next.element);
+		console.log(currentNode.element);
 		currentNode = currentNode.next;
 	}
 }
@@ -63,6 +63,8 @@ people.insert('7', 'head');
 people.insert('8', 'head');
 people.insert('9', 'head');
 people.insert('10', 'head');
+
+display(people);
 
 
 
