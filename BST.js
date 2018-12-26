@@ -143,6 +143,17 @@ function getSmallest(node) {
 	return node;
 }
 
+function Count() {
+	var node = this.root;
+	return getCount(this.root);
+}
+
+function getCount(node) {
+	if (node == null) {
+		return 0;
+	}
+	return getCount(node.left) + getCount(node.right) + 1;
+}
 
 
 
