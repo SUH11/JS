@@ -4,6 +4,7 @@ function Graph(v) { // v为顶点数
 	this.edges = 0;
 	this.adj = [];
 	this.marked = [];
+	this.vertexList = [];
 	for (var i = 0; i < this.vertices; i ++) {
 		this.adj[i] = [];
 		this.marked[i] = false;
@@ -16,6 +17,9 @@ function Graph(v) { // v为顶点数
 	this.edgeTo = [];
 	this.pathTo = pathTo;
 	this.hashPathTo = hashPathTo;
+
+	this.topSort = topSort;
+	this.topSortHelper = topSortHelper;
 }
 
 function addEdge(v, w) { // （1， 2） （2， 1）
@@ -24,18 +28,35 @@ function addEdge(v, w) { // （1， 2） （2， 1）
 	this.edges ++;
 }
 
+// function showGraph() {
+// 	console.log(this.adj);
+// 	for (var i = 0; i < this.vertices; i ++) {
+// 		var str = i + '->';
+// 		for (var j = 0; j < this.vertices; j ++) {
+// 			if (this.adj[i][j] != undefined) {
+// 				str += ' ' + this.adj[i][j];
+// 			}
+// 		}
+// 		console.log(str);
+// 	}
+// }
+
 function showGraph() {
-	console.log(this.adj);
+	var visited = [];
 	for (var i = 0; i < this.vertices; i ++) {
-		var str = i + '->';
-		for (var j = 0; j < this.vertices; j ++) {
+		var str = this.vertexList[i] + ' -> ';
+		for ( var j = 0; j < this.vertices; j ++) {
 			if (this.adj[i][j] != undefined) {
-				str += ' ' + this.adj[i][j];
+				if (visited.indexOf(this.vertexList[j]) < 0) {
+					str += this.vertexList[j] + ' ';
+				}
 			}
 		}
 		console.log(str);
+		visited.pop();
 	}
 }
+
 
 
 function dfs(v) {
@@ -98,31 +119,99 @@ function hashPathTo(v) {
 	return this.marked[v];
 }
 
-var g = new Graph(5);
+function topSort() {
+	var stack = [];
+	var visited = [];
+	for (var i = 0; i < this.vertices; i ++) {
+		visited[i] = false;
+	}
+	for (var i = 0; i < this.vertices; i ++) {
+		if (visited[i] == false) {
+			this.topSortHelper(i, visited, stack);
+		}
+ 	}
+ 	console.log('stack', stack);
+ 	for (var i = 0; i < stack.length; i ++) {
+ 		if (stack[i] != undefined && stack[i] !== false) {
+ 			console.log(this.vertexList[stack[i]]);
+ 		}
+ 	}
+}
 
-g.addEdge(0, 1);
-g.addEdge(0, 2);
-g.addEdge(1, 3);
-g.addEdge(2, 4);
-g.showGraph();
+function topSortHelper(v, visited, stack) {
+	visited[v] = true;
+	if (this.adj[v]) {
+		this.adj[v].forEach(w => {
+			if (!visited[w]) {
+				this.topSortHelper(visited[w], visited, stack);
+			}
+		});
+	}	
+	stack.push(v);
+}
+
+// var g = new Graph(5);
+
+// g.addEdge(0, 1);
+// g.addEdge(0, 2);
+// g.addEdge(1, 3);
+// g.addEdge(2, 4);
+// g.showGraph();
 
 // console.log('----------dfs-------');
 // g.dfs(0);
-console.log('----------bfs-------');
-g.bfs(0);
+// console.log('----------bfs-------');
+// g.bfs(0);
 
 // 寻找最短路径
-var vertex = 4;
-var paths = g.pathTo(vertex);
-var str = '';
-while (paths.length > 0) {
-	if (paths.length > 1) {
-		str += paths.pop() + '-';
-	} else {
-		str += paths.pop();
-	}
-}
-console.log(str);
+// var vertex = 4;
+// var paths = g.pathTo(vertex);
+// var str = '';
+// while (paths.length > 0) {
+// 	if (paths.length > 1) {
+// 		str += paths.pop() + '-';
+// 	} else {
+// 		str += paths.pop();
+// 	}
+// }
+// console.log(str);
+
+// 拓扑排序
+var g = new Graph(6);
+g.addEdge(1, 2);
+g.addEdge(2, 5);
+g.addEdge(1, 3);
+g.addEdge(1, 4);
+g.addEdge(0, 1);
+
+g.vertexList = ['CS1', 'CS2', 'Data Structures',
+				'Assembly Language', 'Operating Systems', 
+				'Algorithms'];
+g.showGraph();
+g.topSort();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
