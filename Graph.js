@@ -85,11 +85,11 @@ function pathTo(v) {
 		return undefined;
 	} 
 	var path = [];
+	// this.edgeTo保留了最短路径
 	for (var i = v; i != source; i = this.edgeTo[i]) {
 		path.push(i);
 	}
 	path.push(source);
-	console.log('path', path);
 	return path;
 }
 
